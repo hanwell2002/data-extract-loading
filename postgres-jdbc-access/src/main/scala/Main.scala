@@ -15,7 +15,7 @@ object Main {
     // connect to the database
     val driver = "org.postgresql.Driver"
     val url = "jdbc:postgresql://localhost:5432/postgres"
-    val con_str = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=Admin$777"
+    val con_str = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=MY_PASSWORD"
 
     val conn = DriverManager.getConnection(con_str)
     try {
@@ -31,7 +31,7 @@ object Main {
     var connection: Connection = null
     val query = "SELECT * from city"
     val username = "postgres"
-    val password = "Admin$777"
+    val password = "MY_PASSWORD
     try {
       // classOf[org.postgresql.Driver]
       connection = DriverManager.getConnection(url, username, password)

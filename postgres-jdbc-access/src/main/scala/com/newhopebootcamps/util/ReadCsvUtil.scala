@@ -9,7 +9,9 @@ import com.github.tototoshi.csv._
 object ReadCsvUtil {
   def read(): Unit = {
     println("Reading CSV")
-    val reader = CSVReader.open(new File("g:/School/data/sample.csv"))
+  
+	// val reader = CSVReader.open(new File("/var/data/sample.csv"))
+	val reader = CSVReader.open(new File("sample.csv"))
     reader.readNext()
 
     // reader.all()
@@ -27,7 +29,9 @@ object ReadCsvUtil {
     csvWriter.writeAll(resultSet2, true)
     csvWriter.close()*/
 
-    val writer = CSVWriter.open(new FileWriter("g:/School/data/test.csv"))
+    //val writer = CSVWriter.open(new FileWriter("g:/School/data/test.csv"))
+	val writer = CSVWriter.open(new FileWriter("test.csv"))
+	
     writer.writeAll(List(List("a", "b", "c"), List("d", "e", "f")))
 /*
     using(CSVWriter.open(new FileWriter("test.csv"))) { writer =>
