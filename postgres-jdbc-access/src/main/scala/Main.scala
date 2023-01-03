@@ -1,26 +1,43 @@
-import com.newhopebootcamps.util.ReadCsvUtil
+import com.newhopebootcamps.util.CsvFileUtil
+
 import java.sql.{Connection, DriverManager, ResultSet}
 import com.github.tototoshi.csv._
-import com.newhopebootcamps.util.ReadCsvUtil
+import com.newhopebootcamps.helper.CsvDemoHelper
+import com.newhopebootcamps.util.CsvFileUtil
+
 import java.io.FileWriter
 import scala.collection.mutable.ListBuffer
 
 object Main {
-  val csvFile = "C:/var/output/resultset.csv"
+  private val csvFile = "C:/var/output/resultset.csv"
 
   def main(args: Array[String]): Unit = {
-    databaseAccessTest()
-
+    databaseAccessDemo()
+    extractAllDataToCsvDemo
     csvTest()
   }
 
-  def databaseAccessTest() {
-    // connect to the database
-    /*
+  def databaseAccessDemo() {
     val driver = "org.postgresql.Driver"
-    val con_str = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=MY_DB_PASSWORD"
+    val con_str = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=Admin$777"
 
+    // connect to the database
+    // Class.forName(driver)
     val conn = DriverManager.getConnection(con_str)
+    /**
+     * import java.sql.Connection
+     * import java.sql.DriverManager
+     * val url: String = "jdbc:postgresql://localhost/postgres"
+     * val props: Nothing = new Nothing
+     * props.setProperty("user", "postgres")
+     * props.setProperty("password", "MY_PASSWORD")
+     * props.setProperty("ssl", "true")
+     * val conn: Connection = DriverManager.getConnection(url, props)
+     *
+     * val url: String = "jdbc:postgresql://localhost/postgres?user=postgres&password=Admin$777&ssl=true"
+     * val conn: Connection = DriverManager.getConnection(url)
+     */
+
     try {
       val stm = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)
       val rs = stm.executeQuery("SELECT * from city")
@@ -30,23 +47,24 @@ object Main {
     } finally {
       conn.close()
     }
-    */
 
-    // Class.forName(driver)
+  }
+
+  def extractAllDataToCsvDemo() {
+    // classOf[org.postgresql.Driver]
     val url = "jdbc:postgresql://localhost:5432/postgres"
     val username = "postgres"
-    val password = "MY_DB_PASSWORD"
+    val password = "Admin$777"
     var connection: Connection = null
     val query = "SELECT * from country"
 
     try {
-      // classOf[org.postgresql.Driver]
       connection = DriverManager.getConnection(url, username, password)
+
       // create the statement, and run the query
       import java.sql.ResultSet
       val statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
       val resultSet = statement.executeQuery(query)
-
       /*   while (resultSet.next) {
            val countryName = resultSet.getString("code")
            val location = resultSet.getString("region")
@@ -55,7 +73,7 @@ object Main {
      */
       println("###################################################")
 
-      ReadCsvUtil.writeAll(resultSet, csvFile, true)
+      CsvFileUtil.writeAll(resultSet, csvFile, true)
 
       println("###################################################")
       // check if csv file generated
@@ -70,26 +88,13 @@ object Main {
     }
     connection.close()
 
-    /**
-     * import java.sql.Connection
-     * import java.sql.DriverManager
-     * val url: String = "jdbc:postgresql://localhost/postgres"
-     * val props: Nothing = new Nothing
-     * props.setProperty("user", "postgres")
-     * props.setProperty("password", "MY_PASSWORD")
-     * props.setProperty("ssl", "true")
-     * val conn: Connection = DriverManager.getConnection(url, props)
-     *
-     * val url: String = "jdbc:postgresql://localhost/postgres?user=postgres&password=MY_DB_PASSWORD&ssl=true"
-     * val conn: Connection = DriverManager.getConnection(url)
-     */
+
   }
 
-  private def csvTest():
-  Unit = {
+  private def csvTest(): Unit = {
     val csvDemoFile ="C:/var/output/demo-csv-write-read.csv"
-    ReadCsvUtil.write(csvDemoFile)
-    ReadCsvUtil.read(csvDemoFile)
+    CsvDemoHelper.write(csvDemoFile)
+    CsvDemoHelper.read(csvDemoFile)
   }
 
   private def checkCsvFile(): Unit = {
