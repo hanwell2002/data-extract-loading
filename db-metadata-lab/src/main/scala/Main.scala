@@ -11,7 +11,7 @@ import scala.collection.mutable.ListBuffer
 object Main {
   private val csvFile = "C:/var/output/resultset.csv"
 
-  def main(args: Array[String]): Unit = {
+ def main(args: Array[String]): Unit = {
     databaseAccessDemo()
     extractAllDataToCsvDemo
     csvTest()
