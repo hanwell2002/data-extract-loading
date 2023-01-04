@@ -10,7 +10,7 @@ public class ResultSetMetaDataExampleMySQL {
             // Class.forName("com.mysql.jdbc.Driver"); // Loading class `com.mysql.jdbc.Driver'. This is deprecated.
             Class.forName("com.mysql.cj.jdbc.Driver");
             //Class.forName("org.postgresql.Driver");
-            //val con_str = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=Admin@777"
+            //val con_str = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=MY_DB_PASSWD"
         } catch (ClassNotFoundException e) {
             System.out.println("Unable To Load The Driver class");
         }
@@ -26,7 +26,7 @@ public class ResultSetMetaDataExampleMySQL {
             String URL = "jdbc:mysql://localhost/world";
             // String URL = "jdbc:postgresql://localhost:5432/postgres";
             String username = "root";
-            String password = "Admin$777";
+            String password = "MY_DB_PASSWD";
 
             //Creating The Connection Object
             con = DriverManager.getConnection(URL, username, password);

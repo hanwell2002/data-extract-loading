@@ -23,7 +23,7 @@ public class ResultSetMetaDataExampleOracle {
             //Database Credentials
             String URL = "jdbc:oracle:thin:@localhost:1521:orclpdb";
             String username = "sparkmso";
-            String password = "Admin777";
+            String password = "MY_DB_PASSWD";
 
             //Creating The Connection Object
             con = DriverManager.getConnection(URL, username, password);

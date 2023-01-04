@@ -24,9 +24,9 @@ public class ResultSetMetaDataExample {
             // String URL = "jdbc:oracle:thin:@localhost:1521:orclpdb";
             // String URL = "jdbc:mysql://localhost/world";
             String URL = "jdbc:postgresql://localhost:5432/postgres";
-            //String URL2 = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=Admin@777";
+            //String URL2 = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=MY_DB_PASSWD";
             String username = "postgres";
-            String password = "Admin@777";
+            String password = "MY_DB_PASSWD";
             //Creating The Connection Object
             con = DriverManager.getConnection(URL, username, password);
             //Creating The Statement Object

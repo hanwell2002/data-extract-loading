@@ -8,7 +8,7 @@ import java.sql.Connection;
         import java.sql.Statement;
 
   // val driver = "org.postgresql.Driver"
-  // val con_str = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=Admin@777"
+  // val con_str = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=MY_DB_PASSWD"
 
 public class CatalogName {
     public static void main(String args[]) throws SQLException {
@@ -16,7 +16,7 @@ public class CatalogName {
        //  DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         //Getting the connection
         String mysqlUrl = "jdbc:mysql://localhost/world";
-        Connection con = DriverManager.getConnection(mysqlUrl, "root", "Admin$777");
+        Connection con = DriverManager.getConnection(mysqlUrl, "root", "MY_DB_PASSWD");
         System.out.println("Connection established......");
         //Creating the Statement
         Statement stmt = con.createStatement();
