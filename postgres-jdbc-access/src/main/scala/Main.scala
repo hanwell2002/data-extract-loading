@@ -19,7 +19,7 @@ object Main {
 
   def databaseAccessDemo() {
     val driver = "org.postgresql.Driver"
-    val con_str = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=Admin@777"
+    val con_str = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=MY_DB_PWD"
 
     // connect to the database
     // Class.forName(driver)
@@ -34,7 +34,7 @@ object Main {
      * props.setProperty("ssl", "true")
      * val conn: Connection = DriverManager.getConnection(url, props)
      *
-     * val url: String = "jdbc:postgresql://localhost/postgres?user=postgres&password=Admin@777&ssl=true"
+     * val url: String = "jdbc:postgresql://localhost/postgres?user=postgres&password=MY_DB_PWD&ssl=true"
      * val conn: Connection = DriverManager.getConnection(url)
      */
 
@@ -54,7 +54,7 @@ object Main {
     // classOf[org.postgresql.Driver]
     val url = "jdbc:postgresql://localhost:5432/postgres"
     val username = "postgres"
-    val password = "Admin@777"
+    val password = "MY_DB_PWD"
     var connection: Connection = null
     val query = "SELECT * from country"
 
