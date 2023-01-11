@@ -59,7 +59,7 @@ object Main {
 	/*
 	val url = "jdbc:oracle:thin:@localhost:1521/bigdatapdb" //use service name
     val username = "sparkmso"
-    val password = "Admin777"
+    val password = "MY_DB_PASSWD"
 	*/
 	
     var connection: Connection = null
