@@ -992,3 +992,5 @@ INSERT INTO countrylanguage VALUES ('USA', 'Portuguese', 0, 0.2);
 commit;
 
 /
+
+select count(*) from countrylanguage;
