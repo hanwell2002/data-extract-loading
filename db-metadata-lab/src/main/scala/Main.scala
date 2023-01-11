@@ -55,6 +55,13 @@ object Main {
     val url = "jdbc:postgresql://localhost:5432/postgres"
     val username = "postgres"
     val password = "MY_DB_PASSWD"
+	
+	/*
+	val url = "jdbc:oracle:thin:@localhost:1521/bigdatapdb" //use service name
+    val username = "sparkmso"
+    val password = "Admin777"
+	*/
+	
     var connection: Connection = null
     val query = "SELECT * from country"
 
