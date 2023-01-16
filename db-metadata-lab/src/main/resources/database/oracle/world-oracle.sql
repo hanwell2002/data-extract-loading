@@ -57,8 +57,8 @@ ALTER TABLE country
 ALTER TABLE countrylanguage
     ADD CONSTRAINT countrylanguage_pkey PRIMARY KEY (countrycode, language);
 
-ALTER TABLE country
-    ADD CONSTRAINT country_capital_fkey FOREIGN KEY (capital) REFERENCES city(id);
+--ALTER TABLE country
+  --  ADD CONSTRAINT country_capital_fkey FOREIGN KEY (capital) REFERENCES city(id);
 
 ALTER TABLE countrylanguage
     ADD CONSTRAINT countrylanguage_countrycode_fkey FOREIGN KEY (countrycode) REFERENCES country(code);

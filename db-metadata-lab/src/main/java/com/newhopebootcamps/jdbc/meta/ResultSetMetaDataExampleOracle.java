@@ -3,17 +3,17 @@ package com.newhopebootcamps.jdbc.meta;
 import java.sql.*;
 
 public class ResultSetMetaDataExampleOracle {
-/*
- static {
-        //Registering The Driver Class, can be ignored for higher version JVM.
-        try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            System.out.println("Oracle JDBC Driver loaded!");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Unable To Load The Driver class");
+    /*
+     static {
+            //Registering The Driver Class, can be ignored for higher version JVM.
+            try {
+                Class.forName("oracle.jdbc.driver.OracleDriver");
+                System.out.println("Oracle JDBC Driver loaded!");
+            } catch (ClassNotFoundException e) {
+                System.out.println("Unable To Load The Driver class");
+            }
         }
-    }
-*/
+    */
 
     public static void main(String[] args) {
         Connection con = null;
@@ -21,8 +21,11 @@ public class ResultSetMetaDataExampleOracle {
         ResultSet rs = null;
         try {
             //Database Credentials
-            String URL = "jdbc:oracle:thin:@localhost:1521:orclpdb";
+/*          String URL = "jdbc:oracle:thin:@localhost:1521:orclpdb";
             String username = "sparkmso";
+            String password = "MY_DB_PASSWD";*/
+            String URL = "jdbc:oracle:thin:@localhost:1521:bigdatapdb";
+            String username = "fortuneapp";
             String password = "MY_DB_PASSWD";
 
             //Creating The Connection Object
@@ -31,7 +34,7 @@ public class ResultSetMetaDataExampleOracle {
             //Creating The Statement Object
             stmt = con.createStatement();
             //Constructing The SQL Query
-            String sql = "SELECT * FROM Country";
+            String sql = "SELECT * FROM fortunemso.COUNTRY";
             //Executing The Query
             rs = stmt.executeQuery(sql);
             //getting ResultSetMetaData object
