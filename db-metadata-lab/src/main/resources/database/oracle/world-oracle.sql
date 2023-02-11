@@ -60,8 +60,8 @@ ALTER TABLE countrylanguage
 --ALTER TABLE country
   --  ADD CONSTRAINT country_capital_fkey FOREIGN KEY (capital) REFERENCES city(id);
 
-ALTER TABLE countrylanguage
-    ADD CONSTRAINT countrylanguage_countrycode_fkey FOREIGN KEY (countrycode) REFERENCES country(code);
+--ALTER TABLE countrylanguage
+  --  ADD CONSTRAINT countrylanguage_countrycode_fkey FOREIGN KEY (countrycode) REFERENCES country(code);
 
 COMMIT;
 
