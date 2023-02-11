@@ -21,7 +21,7 @@ object Main {
 
     envMap.foreach {
       pair =>
-        println("k = " + pair._1 + ".......value:" + pair._2)
+        println("variable = " + pair._1 + ".......value = " + pair._2)
     }
 
   }
