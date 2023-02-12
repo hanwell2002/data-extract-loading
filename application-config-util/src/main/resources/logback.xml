@@ -1,17 +1,17 @@
 <configuration>
     <variable name="LOG_FULL_PATH" value="C:/var/log/application-config-example.log"/>
-    <variable name="msg_pattern">%d{HH:mm:ss.SSS} TKD [%thread] %-5level %logger{36} - %msg%n</variable>
+    <variable name="msg_pattern" value="%d{HH:mm:ss.SSS} TKD [%thread] %-5level %logger{36} - %msg%n" />
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>${LOG_FULL_PATH}</file>
         <encoder>
-            <pattern>%date [%level] from %logger in %thread - %message%n%xException</pattern>
+            <pattern>${msg_pattern}</pattern>
         </encoder>
     </appender>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} TKD [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>${msg_pattern}</pattern>
         </encoder>
     </appender>
 
