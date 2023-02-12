@@ -1,0 +1,33 @@
+<configuration>
+    <variable name="LOG_FULL_PATH" value="C:/var/log/application-config-example.log"/>
+    <variable name="msg_pattern">%d{HH:mm:ss.SSS} TKD [%thread] %-5level %logger{36} - %msg%n</variable>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_FULL_PATH}</file>
+        <encoder>
+            <pattern>%date [%level] from %logger in %thread - %message%n%xException</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} TKD [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNCFILE" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE" />
+    </appender>
+
+    <appender name="ASYNCSTDOUT" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="STDOUT" />
+    </appender>
+
+    <logger name="application" level="DEBUG" />
+
+    <root level="DEBUG">
+        <appender-ref ref="ASYNCFILE" />
+        <appender-ref ref="ASYNCSTDOUT" />
+    </root>
+
+</configuration>
