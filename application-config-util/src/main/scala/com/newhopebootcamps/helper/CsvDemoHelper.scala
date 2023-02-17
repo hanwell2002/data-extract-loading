@@ -1,20 +1,21 @@
 package com.newhopebootcamps.helper
 
 import com.github.tototoshi.csv._
+import com.newhopebootcamps.config.Logging
 import com.newhopebootcamps.util.CommonUtils.isEmpty
 
 import java.io._
 import java.sql.ResultSet
 
-object CsvDemoHelper {
+object CsvDemoHelper extends Logging{
   def read(filePath: String): Unit = {
-    println("Reading CSV")
+    logger.debug("Reading CSV")
     val reader = CSVReader.open(new File(filePath))
     //1.
-    // reader.foreach(println)
+    // reader.foreach(logger.debug)
     //2.
     // val all =  reader.all()
-    // all.foreach(fields => println(fields))
+    // all.foreach(fields => logger.debug(fields))
     //3.
     val it = reader.iterator
     while (it.hasNext) {
@@ -26,14 +27,21 @@ object CsvDemoHelper {
     }
 
     reader.close()
-    println("Completed reading CSV")
+    logger.debug("Completed reading CSV")
   }
 
   def write(filePath: String): Unit = {
-    println("Writing CSV ...... ")
+    logger.debug("Writing CSV ...... ")
 
-    val writer = CSVWriter.open(new FileWriter(filePath))
-    writer.writeAll(List(List("a", "b", "c"), List("d", "e", "f"), List("1", "2", "3")))
+    try {
+      val writer = CSVWriter.open(new FileWriter(filePath))
+      writer.writeAll(List(List("a", "b", "c"), List("d", "e", "f"), List("1", "2", "3")))
+    } catch {
+      case e: IOException => logger.error("Failed to write file!: " + e.getMessage)
+      case _: Throwable => logger.error("Exception: Unknown!")
+    } finally {
+      logger.info(s"Write csv: $filePath")
+    }
   }
 
   def rsWrite(rs: ResultSet, headerString: String, filePath: String): Unit = {
@@ -43,11 +51,11 @@ object CsvDemoHelper {
     if (!isEmpty(headerString)) {
       val header = headerString.split(",").toList
       rl :+= header
-      println("CSV Header: ")
-      header.foreach(println)
+      logger.debug("CSV Header: ")
+      header.foreach(logger.debug)
     }
     else
-      println("CSV no header")
+      logger.debug("CSV no header")
 
     while (rs.next) {
       var rec: List[String] = List.empty[String]

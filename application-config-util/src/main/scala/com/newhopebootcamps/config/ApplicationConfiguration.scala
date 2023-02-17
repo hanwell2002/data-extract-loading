@@ -1,43 +1,62 @@
 package com.newhopebootcamps.config
 
 import com.typesafe.config.ConfigFactory
+import com.newhopebootcamps.encryption._
+import com.newhopebootcamps.helper.CsvDemoHelper.logger
 
 import java.io.File
+import scala.util.control.ControlThrowable
 
 object ApplicationConfiguration {
-//  var host: String = ""
-//  var url: String = ""
-//  var username: String = ""
-//  var password: String = ""
+  var url: String = ""
+  var username: String = ""
+  var password: String = ""
 
-  val defaults = ConfigFactory.load()
+  var key: String = ""
+  var initVector: String = ""
 
-  val fromSource = ConfigFactory.parseResources("database.conf").withFallback(defaults)
+  private val loaded = initialize
 
-  val file = new File("C:/var/config/database.cfg")
-  val conf = ConfigFactory.parseFile(file).withFallback(fromSource).withFallback(defaults)
+  def initialize(): Boolean = {
+    try {
+      val defaults = ConfigFactory.load()
+      val fromSource = ConfigFactory.parseResources("kafka.conf").withFallback(defaults)
+      val file = new File(defaults.getString("appinfo.config"))
+      val conf = ConfigFactory.parseFile(file).withFallback(fromSource).withFallback(defaults)
 
-  val url = conf.getString("database.url")
-  val username = conf.getString("database.username")
-  val password = conf.getString("database.password")
-  val host = conf.getString("database.host")
+      key = conf.getString("secure.key")
+      initVector = conf.getString("secure.initVector")
+      println(s"key=$key, initVector = $initVector")
 
+      url = conf.getString("database.url")
+      username = conf.getString("database.username")
+      val pwd = conf.getString("database.password")//encrypted password
+      password = EncryptionUtil.decrypt(pwd)   //decrypt the password to actuall passwd
 
- /* def initialize(): Unit = {
- val defaults = ConfigFactory.load()
-    val conf = ConfigFactory.parseResources("database.conf").withFallback(defaults)
+      println(s"Initialize: url=$url, username=$username, pwd = $password")
 
-    val url = conf.getString("database.url")
-    val username = conf.getString("database.username")
-    val password = conf.getString("database.password")
-    val host = conf.getString("database.host")
+      val appName = conf.getString("appinfo.name")
+      println(s"appName=$appName")
 
-    println(s"url=$url, username=$username, pwd = $password, host= $host")
+/*      println(conf.getString("Modules.Logging.logDb"))
+      println(conf.getString("Modules.Tenants.tenantsDb"))
 
-    val appName = conf.getString("appinfo.name")
-    println(s"appName=$appName")
+      println(conf.getString("KafkaClient.principal"))*/
 
-    println(conf.getString("Modules.Logging.logDb"))
-    println(conf.getString("Modules.Tenants.tenantsDb"))
-  }*/
+    } catch  safely {
+     case ex: Throwable => println("ERROR: Failed to initialize application config!")
+     // case _: Throwable => logger.error("Exception: Failed to initialize application config!!")
+      false
+    }
+    true
+  }
+
+  def safely[T](handler: PartialFunction[Throwable, T]): PartialFunction[Throwable, T] = {
+    case ex: ControlThrowable => throw ex
+    case ex: Throwable if handler.isDefinedAt(ex) => handler(ex)
+    // If they didn't handle it, rethrow. This line isn't necessary, just for clarity
+    case ex: Throwable => throw ex
+  }
+
 }
+

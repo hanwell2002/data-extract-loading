@@ -1,39 +1,35 @@
 package com.newhopebootcamps.dao
 
-import com.newhopebootcamps.config.ApplicationConfiguration
-import com.newhopebootcamps.util.CsvFileUtil
+import java.sql.{ResultSet, SQLException}
 
-import java.sql.{Connection, DriverManager}
+class CountryDao extends Dao {
+  def findCountryByQuery(continent: String): ResultSet = {
 
-class CountryDao {
-
-  def read() {
-
-    val url = ApplicationConfiguration.url
-    val username = ApplicationConfiguration.username
-    val password = ApplicationConfiguration.password
-
-    println(s"read:> url=$url, username=$username, pwd = $password")
-
-    var connection: Connection = null
-    val query = "SELECT * from country"
-
+    val sql = "'SELECT * from country WHERE continent='" + continent + "'"
+    var resultSet: ResultSet = null
     try {
-      connection = DriverManager.getConnection(url, username, password)
-
       // create the statement, and run the query
-      import java.sql.ResultSet
-      val statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-      val resultSet = statement.executeQuery(query)
+      val statement = getConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+      resultSet = statement.executeQuery(sql)
+      /*
+            while (resultSet.next) {
+              val countryName = resultSet.getString("name")
+              val location = resultSet.getString("region")
+              // logger.debug("country-name = %30s, region = %s".format(countryName, location))
+            }
 
-      while (resultSet.next) {
-        val countryName = resultSet.getString("code")
-        val location = resultSet.getString("region")
-       // println("country-name = %s, location = %s".format(countryName, location))
-      }
+            resultSet.last()
+            println("rows=" + resultSet.getRow)
+            resultSet.beforeFirst()*/
+
+      closeConnection
+
     } catch {
-      case e => e.printStackTrace
+      case e: SQLException => logger.error("SQLException: %s", e.getMessage)
+      case _: Throwable => logger.error("Exception: Unknown exception.")
+        null
     }
-    connection.close()
+
+    resultSet
   }
 }

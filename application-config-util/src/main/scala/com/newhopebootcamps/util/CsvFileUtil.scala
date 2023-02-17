@@ -3,19 +3,28 @@ package com.newhopebootcamps.util
 import java.io._
 import java.sql.ResultSet
 import com.github.tototoshi.csv._
+import com.newhopebootcamps.config.Logging
 
-object CsvFileUtil {
+object CsvFileUtil extends Logging {
   def writeAll(rs: ResultSet, filePath: String, isWriteHeader: Boolean = true): Unit = {
-    val csvWriter = CSVWriter.open(new FileWriter(filePath))
-    var rl: List[List[String]] = List.empty
-    val columnNames = getColumnNames(rs)
 
-    if (isWriteHeader) {
-      rl :+= columnNames
+    try {
+      val csvWriter = CSVWriter.open(new FileWriter(filePath))
+      var rl: List[List[String]] = List.empty
+      val columnNames = getColumnNames(rs)
+
+      if (isWriteHeader) {
+        rl :+= columnNames
+      }
+
+      rl ++= extractRecords(rs)
+      csvWriter.writeAll(rl)
+    } catch {
+      case e: IOException => logger.error("Failed to write file!: " + e.getMessage)
+      case _: Throwable => logger.error("Exception: Unknown!")
+    } finally {
+      logger.debug(s"Generated CSV Report: $filePath")
     }
-
-    rl ++= extractRecords(rs)
-    csvWriter.writeAll(rl)
   }
 
   def extractRecords(rs: ResultSet): List[List[String]] = {
@@ -47,5 +56,30 @@ object CsvFileUtil {
     columnList
   }
 
+  def tmp(): Unit = {
+    def inlineMeAgain[T](f: => T): T = {
+      f
+    }
+
+    def inlineme(f: => Int): Int = {
+      try {
+        inlineMeAgain {
+          return f
+        }
+      } catch {
+        case ex: Throwable => 5
+      }
+    }
+
+    def doStuff {
+      val res = inlineme {
+        10
+      }
+      println("we got: " + res + ". should be 10")
+    }
+    doStuff
+
+
+  }
 
 }
